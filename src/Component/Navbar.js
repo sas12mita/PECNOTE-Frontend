@@ -19,7 +19,7 @@ export default function Navbar() {
   };
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#0077b3', paddingLeft: 30 }}>
+      <nav className="navbar navbar-expand-lg navbar-light fixed-top" style={{ backgroundColor: '#0077b3', paddingLeft: 30 }}>
         <div className="container-fluid">
           <Link className="navbar-brand text-white" to="/">PECNOTE</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
