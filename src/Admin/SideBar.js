@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export default function SideBar() {
   return (
-    <div className='sidebar' style={{ backgroundColor: "#E0E5E5",fontSize: 18,padding: 30 ,height:"auto"}}>
+    <div  style={{ backgroundColor: "#E0E5E5",fontSize: 18,padding: 30 ,height:"auto"}}>
     <ul type="none">
     <li>
     <Link to="/dashboard" className='nav-link text-dark'>Home</Link>

@@ -2,11 +2,12 @@ import React from 'react'
 import Navbar from '../Component/Navbar'
 import Footer from '../Component/Footer'
 import { Link } from 'react-router-dom';
+import { useAuth } from '../Context/ContextApi.js';
 import SideBar from './SideBar';
 import "../App.js"
 
 export default function Dashboard() {
-
+const [auth,setAuth]=useAuth();
   return (
     <div>
       <Navbar />
@@ -20,7 +21,7 @@ export default function Dashboard() {
           <div className='col-md-9'>
             <div className='row' style={{ margin: 20 }}>
 
-              <h5>Welcome To Admin Dashboard</h5>
+              <h5>Welcome To {auth && auth.fullName}     </h5>
               <br /><br />
               <div className='col-md-3'>
 

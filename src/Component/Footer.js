@@ -16,7 +16,7 @@ import { FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
     return (
-        <div>
+        <div className='container-fluid'>
             <div className='Upperfooter'>
             
                 <div className='container-fluid'>
@@ -72,7 +72,7 @@ export default function Footer() {
                  </div>
                  </div>
                 </div>
-                <div className='buttonfooter' style={{height:60, backgroundColor:"#0077b3",paddingTop:20,paddingBottom:20}}>
+                <div className='buttonfooter container-fluid' style={{height:60, backgroundColor:"#0077b3",paddingTop:20,paddingBottom:20}}>
                 <center className='text-white'>© 2020 Copyright: PECNOTE.COM</center></div>
         </div>
     )

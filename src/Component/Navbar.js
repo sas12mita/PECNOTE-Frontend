@@ -1,9 +1,12 @@
 import React from 'react'
-import { FiShoppingCart } from "react-icons/fi";
+import { FaCartPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from '../Context/ContextApi';
 import { toast } from 'react-toastify';
+import { useCart } from '../Context/Cart';
+import { Badge } from "antd";
 export default function Navbar() {
+  const [cart] = useCart();
   const [auth, setAuth] = useAuth();
   const handleLogout = () => {
     setAuth({
@@ -23,7 +26,7 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav mx-auto mb-2 mb-lg-0" style={{ paddingLeft: 20, fontSize: 17 }}>
               <li className="nav-item">
                 <Link className="nav-link text-white" to="/">Home</Link>
               </li>
@@ -38,8 +41,20 @@ export default function Navbar() {
                 <Link className="nav-link text-white" to="/order">Order</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-white" to="#"><FiShoppingCart /></Link>
+                <Badge count={cart?.length} showZero>
+                  <Link className="nav-link text-white" to="/buynotes/cart" style={{ paddingTop: 10 }} ><span style={{ fontSize: 17 }}>Cart </span><span style={{ fontSize: 20 }}><FaCartPlus /></span></Link>
+                </Badge>
               </li>
+            </ul>
+            <ul className="navbar-nav  mb-2 mb-lg-0">
+              <li><Link className="nav-link text-white" to="/chat"><button className="btn" style={{
+                backgroundColor: '#ffffff',
+                color: '#0077b3',
+                border: 'none',
+                padding: '2px 15px',
+                borderRadius: '45px',
+
+              }}>Live Chat</button></Link></li>
 
               {
                 !auth.token ? (<>
@@ -51,10 +66,10 @@ export default function Navbar() {
                   </li>
                 </>) : (
                   <>
-                  <li className="nav-item">
-                    <Link onClick={handleLogout} className="nav-link text-white" to="/login">Logout</Link>
-                  </li>
-                </>)
+                    <li className="nav-item">
+                      <Link onClick={handleLogout} className="nav-link text-white" to="/login">Logout</Link>
+                    </li>
+                  </>)
               }
             </ul>
           </div>

@@ -23,6 +23,10 @@ import IT from './Component/ViewSoftcopy/IT';
 import Computer from './Component/ViewSoftcopy/Computer';
 import Civil from './Component/ViewSoftcopy/Civil';
 import DetailPage from './Component/DetailPage';
+import UserCartPage from './Component/UserCartPage';
+import CheckoutForm from './Component/Checkout';
+import Chat from './Component/Chat';
+import Order from './Component/Order';
 //import Search from './Component/Search';
 
 
@@ -37,10 +41,12 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
-          <Route path="/computer" element={<Computer />} /> 
+          <Route path="/computer" element={<Computer />} />
           <Route path="/civil" element={<Civil />} />
-          <Route path="/architecture" element={<Architecture />} /> 
+          <Route path="/architecture" element={<Architecture />} />
           <Route path="/it" element={<IT />} />
+          <Route path="/order" element={<Order/>} />
+
 
 
 
@@ -59,12 +65,17 @@ function App() {
           <Route path="/sellnote" element={<UserPrivateRoute />}>
             <Route path="" element={<SellNote />} />
           </Route>
+
+          
           <Route path='/buynotes' element={<UserPrivateRoute />}>
             <Route path="" element={<BuyNotes />} />
             <Route path=":slug" element={<DetailPage />} />
+            <Route path='cart' element={<UserCartPage/>} />
+            <Route path='checkout' element={<CheckoutForm/>} />
 
-      
           </Route>
+          <Route path="/chat" element={<UserPrivateRoute/>}>
+          <Route path="" element={<Chat/>}/></Route>
 
         </Routes>
       </BrowserRouter>

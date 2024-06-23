@@ -1,24 +1,17 @@
-const noteBookModel = require("../Models/noteBookModel");
-const fs=require("fs-extra")
-const slugify=require("slugify")
-const uploadNote= async (req,res)=>
-{
-   try {
-    const {name,slug,description,price,quantity,shipping}=req.fields;
-    const {photo}=req.files;
-    const note = new noteBookModel({ ...req.fields, slug: slugify(name) });
-    if (photo) {
-        note.photo.data = fs.readFileSync(photo.path);
-        note.photo.contentType = photo.type;
-    }
-    await note.save();
-    res.status(201).send({
-      success: true,
-      message: "Product Created Successfully",
-      note,
-    });
-   } catch (error) {
-    console.log(error)
-   }
+import React from 'react'
+import Navbar from './Navbar'
+import Footer from './Footer'
+
+export default function Order() {
+  return (
+    <div>
+      <Navbar/>
+      <br/>      <br/>
+      <h1><center>Coming soon</center></h1>
+      <br/>      <br/>
+      <br/>
+
+      <Footer/>
+    </div>
+  )
 }
-module.exports = { uploadNote};

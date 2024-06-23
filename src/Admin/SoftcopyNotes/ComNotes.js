@@ -142,7 +142,7 @@ export default function ComNotes() {
                 </thead>
                 <tbody>
                   {notes && notes.map((note, index) => {
-                    if (note.faculty === 'computer'&& note.semester==='Iv') {
+                    if (note.faculty === 'computer'&& note.semester==='IV') {
                       return (
                         <tr key={index}>
                           <td>{note.subjectCode}</td>
