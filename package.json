@@ -8,6 +8,8 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.17.0",
     "axios": "^1.6.8",
+    "braintree": "^3.23.0",
+    "braintree-web-drop-in-react": "^1.2.1",
     "formidable": "^3.5.1",
     "json-stringify": "^1.0.0",
     "react": "^18.2.0",

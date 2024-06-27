@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify'
 //import {select} from 'andt'
 import { useNavigate,useLocation } from 'react-router-dom'
 export default function SellNote() {
+  const navigate = useNavigate()
   //const location=useLocation()
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('')
@@ -19,8 +20,6 @@ export default function SellNote() {
   const[photo,setPhoto]=useState('');
   const [description,setDescription]=useState("");
    const[notes,setNotes] =useState("")
-   const[discountPrice,setdiscountPrice] =useState("")
-
 
     async function submit(e){
       e.preventDefault();
@@ -30,8 +29,6 @@ export default function SellNote() {
         productData.append("photo", photo);
         productData.append("price", price);
         productData.append("quantity", quantity);
-        productData.append("discountPrice", discountPrice);
-
         productData.append("description", description);
          axios.post(
           "http://localhost:8000/api/auth/uploadNotes",
@@ -97,8 +94,6 @@ useEffect(() => {
         <input type='number' name='quantity'  onChange={(e) => setQuantity(e.target.value)}   className='form-control' required /><br />
         <label>Price</label>
         <input type='number' name='price'  onChange={(e) => setPrice(e.target.value)}  className='form-control' required /><br />
-        <label>Discount Price</label>
-        <input type='number' name='discountPrice'  onChange={(e) => setdiscountPrice(e.target.value)}  className='form-control' required /><br />
         <label>Description</label>
         <textarea id="w3review" name="w3review" rows="4" cols="40"  onChange={(e) => setDescription(e.target.value)} ></textarea><br/><br/>
         <center><button type='btn' onClick={submit} style={{ backgroundColor: "#0077b3", color: 'white', width: 200 }}>Upload Note</button></center><br />

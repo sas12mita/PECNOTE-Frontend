@@ -21,9 +21,9 @@ export default function Body() {
         <div className='row'>
           <div className='col-md-2 bodymain'></div>
           <div className='col-md-8'>
-            <div className='row'>
+            <div className='row' style={{marginTop:40}}>
               <div className='col-md-6 mainBody'>
-                <br /><br />
+                <br /><br /><br/><br/>
                 <p style={{ fontSize: 12 }}>Welcome to, <span style={{ fontSize: 20, color: "purple" }}>PECNOTE</span></p>
 
                 <h2>Grab Up to 50 % off<br /> at selected Book</h2>

@@ -65,9 +65,9 @@ export default function Signup() {
 
 
                     <div className='col-md-4 signform' >
-                        <br />
+                        <br /><br/>
                         <center><h3>Signup</h3></center>
-                        <form>
+                        <form style={{paddingLeft:20,paddingRight:20}}>
                         <label>fullName</label>
                             <input type='text' name='fullName' onChange={(e) => { setfullName(e.target.value) }} className='form-control' required /><br />
                             <label>Email</label>

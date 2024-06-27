@@ -30,7 +30,7 @@ const [auth,setAuth]=useAuth();
                     <center>
                       <h5 class="card-title">Total User</h5>
                       <p class="card-text">50</p>
-                      <Link to="#" class="btn" style={{ backgroundColor: '#E0E5E5', width: 100 }}>Manage</Link></center>
+                      <Link to="/dashboard/manageUser" class="btn" style={{ backgroundColor: '#E0E5E5', width: 100 }}>Manage</Link></center>
                   </div>
                 </div></div>
               <div className='col-md-3'><div class="card">
