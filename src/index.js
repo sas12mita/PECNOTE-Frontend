@@ -14,7 +14,9 @@ root.render(
   <SearchProvider>
   <CartProvider>
   <React.StrictMode>
+ 
     <App />
+
   </React.StrictMode>
   </CartProvider>
   </SearchProvider>

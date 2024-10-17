@@ -17,6 +17,7 @@ export default function SellNote() {
   const [slug, setSlug] = useState('')
   const [quantity,setQuantity]=useState('')
   const [price,setPrice]=useState('');
+  const [discountPrice,setDiscountPrice]=useState('');
   const[photo,setPhoto]=useState('');
   const [description,setDescription]=useState("");
    const[notes,setNotes] =useState("")
@@ -28,6 +29,7 @@ export default function SellNote() {
         productData.append("name", name);
         productData.append("photo", photo);
         productData.append("price", price);
+        productData.append("discountPrice", discountPrice);
         productData.append("quantity", quantity);
         productData.append("description", description);
          axios.post(
@@ -79,7 +81,7 @@ useEffect(() => {
     <div className='col-md-4'>
     <br/>
     <div className=' secondehandnote'>
-    <br/>
+    <br/><br/>
     <h4>Form For Second Hand Notes</h4>
 
     <form >
@@ -94,6 +96,8 @@ useEffect(() => {
         <input type='number' name='quantity'  onChange={(e) => setQuantity(e.target.value)}   className='form-control' required /><br />
         <label>Price</label>
         <input type='number' name='price'  onChange={(e) => setPrice(e.target.value)}  className='form-control' required /><br />
+        <label>Discount Price</label>
+        <input type='number' name='discountprice'  onChange={(e) => setDiscountPrice(e.target.value)}  className='form-control' required /><br />
         <label>Description</label>
         <textarea id="w3review" name="w3review" rows="4" cols="40"  onChange={(e) => setDescription(e.target.value)} ></textarea><br/><br/>
         <center><button type='btn' onClick={submit} style={{ backgroundColor: "#0077b3", color: 'white', width: 200 }}>Upload Note</button></center><br />

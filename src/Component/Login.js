@@ -16,44 +16,42 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [auth, setAuth] = useAuth();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    axios.post("http://localhost:8000/api/auth/login", { email, password })
-      .then(result => {
-        console.log(result)
-        if (result.data.status==="userexist") {
-          toast.success("successfull login");
-          setAuth({ 
-            ...auth,
-            user: result.data.user,
-            token: result.data.token,
-          });
-          navigate(location.state || "/")
-          localStorage.setItem("auth", JSON.stringify(result.data));
-          navigate("/");
-        }
-        if (result.data.status==="adminexist") {
-          toast.success("successfull login");
-          setAuth({ 
-            ...auth,
-            user: result.data.user,
-            token: result.data.token,
-          });
-          navigate(location.state || "/")
-          localStorage.setItem("auth", JSON.stringify(result.data));
-          navigate("/dashboard");
-        }
-        else if (result.data === "notexist" || result.data.status==="pw_wrong") {
-          toast.error("Incorrect details")
-        }
-        
-        else{
-          toast.error("internal server error")
-        }
-      })
-      .catch(err => console.log(err))
-  }
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const result = await axios.post("http://localhost:8000/api/auth/login", { email, password });
+      console.log(result);
+  
+      if (result.data.status === "userexist") {
+        toast.success("successful login");
+        setAuth({
+          ...auth,
+          user: result.data.user,
+          token: result.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(result.data));
+        navigate(location.state || "/");
+      } else if (result.data.status === "adminexist") {
+        toast.success("successful login");
+        setAuth({
+          ...auth,
+          user: result.data.user,
+          token: result.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(result.data));
+        navigate("/dashboard");
+      } else if (result.data === "notexist" || result.data.status === "pw_wrong") {
+        toast.error("Incorrect details");
+      } else {
+        toast.error("internal server error");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Login failed. Please try again.");
+    }
+  };
+  
   return (
     <div>
       <Navbar/>

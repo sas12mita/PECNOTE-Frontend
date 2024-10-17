@@ -21,7 +21,7 @@ export default function ComNotes() {
   return (
     <div>
       <Navbar />
-      <br />
+      <br /><br/>
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-2'></div>

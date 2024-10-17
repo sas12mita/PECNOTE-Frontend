@@ -11,7 +11,7 @@ const [auth,setAuth]=useAuth();
   return (
     <div>
       <Navbar />
-
+<br/><br/>
       <div className='container-fluid'>
         <div className='row'>
           <br />
@@ -38,7 +38,7 @@ const [auth,setAuth]=useAuth();
                   <center>
                     <h5 class="card-title">Total Order</h5>
                     <p class="card-text">50</p>
-                    <Link to="#" class="btn" style={{ backgroundColor: '#E0E5E5', width: 100 }}>Manage</Link></center>
+                    <Link to="/dashboard/manageOrder" class="btn" style={{ backgroundColor: '#E0E5E5', width: 100 }}>Manage</Link></center>
                 </div>
               </div>
               </div>

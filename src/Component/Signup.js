@@ -72,8 +72,6 @@ export default function Signup() {
                             <input type='text' name='fullName' onChange={(e) => { setfullName(e.target.value) }} className='form-control' required /><br />
                             <label>Email</label>
                             <input type='email' name='email' onChange={(e) => { setEmail(e.target.value) }} className='form-control' required /><br />
-                            <label>PhoneNumber</label>
-                            <input type='number' name='phoneNumber' onChange={(e) => { setphoneNumber(e.target.value) }} className='form-control' required /><br />
                             <label>password</label>
                             <input type='password' name='password' onChange={(e) => { setPassword(e.target.value) }} className='form-control' required /><br />
                             <center><button type='btn' onClick={submit} style={{ backgroundColor: "#0077b3", color: 'white', width: 200 }}>SignUp</button></center><br />

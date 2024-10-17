@@ -1,4 +1,3 @@
-import '../App.css';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../Context/ContextApi';
 import { useCart } from '../Context/Cart';
@@ -12,79 +11,107 @@ import { toast } from 'react-toastify';
 export default function UserCartPage() {
   const [auth] = useAuth();
   const [clientToken, setClientToken] = useState('');
+  const [payment, setPayment] = useState('');
   const [instance, setInstance] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [address, setAddress] = useState('');
   const [cart, setCart] = useCart();
-  const [address, setAddress] = useState(''); // Add state for address
+  const [phoneNumber,setphoneNumber]=useState('');
   const navigate = useNavigate();
 
-  const TotalPrice = () => {
-    try {
-      let totalItemPrice = 0, totalPrice, sPrice = 0;
-      cart?.forEach((c) => {
-        totalItemPrice += c.price;
-      });
-      if (totalItemPrice !== 0) {
-        sPrice = 20;
-      }
-      totalPrice = totalItemPrice + sPrice;
-      return { totalItemPrice, totalPrice, sPrice };
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const { totalItemPrice, sPrice, totalPrice } = TotalPrice();
-
+  // Fetch Braintree client token
   const getToken = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/auth/braintress/token');
+      const { data } = await axios.get('http://localhost:8000/api/auth/braintreeToken');
       setClientToken(data?.clientToken);
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching client token:', error);
     }
   };
 
   useEffect(() => {
     getToken();
-  }, [auth?.token]);
+  }, []);
 
+  // Handle change in address input field
+  const handleChange = (e) => {
+    setAddress(e.target.value);
+  };
+
+  // Calculate total price of items in cart
+  const calculateTotalPrice = () => {
+    let totalItemPrice = 0, totalPrice, sPrice = 0;
+    cart?.forEach((item) => {
+      totalItemPrice += item.price;
+    });
+    if (totalItemPrice !== 0) {
+      sPrice = 20; // Example shipping fee
+    }
+    totalPrice = totalItemPrice + sPrice;
+    return { totalItemPrice, totalPrice, sPrice };
+  };
+
+  const { totalItemPrice, sPrice, totalPrice } = calculateTotalPrice();
+
+  // Remove item from cart
+  const removeCartItem = (productId) => {
+    const updatedCart = cart.filter((item) => item._id !== productId);
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
+
+  // Handle payment process
   const handlePayment = async () => {
-    try {
-      setLoading(true);
-      const { nonce } = await instance.requestPaymentMethod();
-      const { data } = await axios.post('http://localhost:8000/api/auth/braintress/payment', {
-        nonce,
-        cart,
-        address, // Include address in the payment request
-      });
-      setLoading(false);
-      localStorage.removeItem('cart');
-      setCart([]);
-      navigate('/order');
-      toast.success('Payment Completed Successfully');
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
+   
   };
 
-  const removeCartItem = (pid) => {
+  // Handle confirmation of order
+  const handleConfirmOrder = async () => {
     try {
-      let myCart = [...cart];
-      let index = myCart.findIndex((item) => item._id === pid);
-      myCart.splice(index, 1);
-      setCart(myCart);
-      localStorage.setItem('cart', JSON.stringify(myCart));
+      if (payment === 'cod') {
+     
+        const { data } = await axios.post('http://localhost:8000/api/auth/codpayment', {
+         phoneNumber,
+          cart,
+          address,
+        });
+        if (data.status) {
+          localStorage.removeItem('cart');
+          setCart([]);
+          alert("successful place order")
+          navigate('/buynotes');
+        } else {
+          toast.error('Failed to place order');
+        }
+      } else if (payment === 'online') {
+        try {
+          setLoading(true);
+          const { nonce } = await instance.requestPaymentMethod();
+          const { data } = await axios.post(
+            'http://localhost:8000/api/auth/payment',
+            {
+              nonce,
+              cart,
+              phoneNumber,
+              address,
+            }
+          );
+          setLoading(false);
+          console.log('Payment response:', data);
+          localStorage.removeItem('cart');
+          setCart([]);
+          navigate('/buynotes');
+          alert('Online Payment Completed Successfully');
+        } catch (error) {
+          console.error('Payment error:', error.response ? error.response.data : error.message);
+          setLoading(false);
+          toast.error('Payment failed. Please try again.');
+        }
+      }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   };
-
-  useEffect(() => {
-    console.log('Client Token:', clientToken);
-    console.log('Instance:', instance);
-  }, [clientToken, instance]);
 
   return (
     <div>
@@ -101,23 +128,23 @@ export default function UserCartPage() {
         <div className='row'>
           <div className='col-md-7'>
             <h5 style={{ paddingLeft: 30 }}>Item In Cart</h5>
-            {cart?.map((c) => (
-              <table className='table card' key={c._id}>
+            {cart?.map((item) => (
+              <table className='table card' key={item._id}>
                 <tbody>
                   <tr>
                     <td>
                       <img
-                        src={`http://localhost:8000/api/auth/getPhoto/${c._id}`}
+                        src={`http://localhost:8000/api/auth/getPhoto/${item._id}`}
                         height={150}
                         width={140}
-                        alt={c.name}
+                        alt={item.name}
                       />
                     </td>
                     <td style={{ paddingLeft: 70 }}>
-                      <p>Name: {c.name}</p>
-                      <p style={{ color: 'red', fontSize: 20, fontWeight: 'bold' }}>Rs. {c.price}</p>
-                      <p style={{ fontSize: 12 }}>{c.description.substring(0, 30)}</p>
-                      <button className='btn btn-danger' onClick={() => removeCartItem(c._id)}>
+                      <p>Name: {item.name}</p>
+                      <p style={{ color: 'red', fontSize: 20, fontWeight: 'bold' }}>Rs. {item.price}</p>
+                      <p style={{ fontSize: 12 }}>{item.description.substring(0, 30)}</p>
+                      <button className='btn btn-danger' onClick={() => removeCartItem(item._id)}>
                         Remove
                       </button>
                     </td>
@@ -126,13 +153,10 @@ export default function UserCartPage() {
               </table>
             ))}
           </div>
-          <div className='col-md-5'>
-            <table className='table'>
-              
-              <br />
+          <div className='col-md-5' style={{ backgroundColor: '#d7e4fc', padding: 20, height: 'auto' }}>
+            <table className='table' style={{ backgroundColor: 'white', padding: 20 }}>
               <tbody className='orderSummary'>
-                <br/>
-                <tr style={{ paddingLeft: 20, textAlign: 'center' }}>
+                <tr>
                   <h5>Order Summary</h5>
                 </tr>
                 <tr>
@@ -144,38 +168,66 @@ export default function UserCartPage() {
                   <td style={{ paddingLeft: 100 }}>
                     <p>Rs.{totalItemPrice}</p>
                     <p>Rs. {sPrice} </p>
-                    <p style={{color:"orange",fontWeight:"bold"}}>Rs. {totalPrice}</p>
+                    <p style={{ color: 'orange', fontWeight: 'bold' }}>Rs. {totalPrice}</p>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <div className="mb-3">
-              <label htmlFor="address" className="form-label">Shipping Address</label>
+            <div className='mb-3'>
+              <label>Address:</label>
               <input
-                type="text"
-                className="form-control"
-                id="address"
+                type='text'
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Enter your shipping address"
+                onChange={handleChange}
+                className='form-control'
                 required
               />
+               <label>PhoneNumber</label>
+               <input 
+               type='number'
+                name='phoneNumber'
+                 onChange={(e) => { setphoneNumber(e.target.value) }} 
+                 className='form-control' required />
             </div>
-            {clientToken ? (
-              <DropIn
-                options={{
-                  authorization: clientToken,
-                }}
-                onInstance={(instance) => setInstance(instance)}
-              />
-            ) : (
-              <div>Loading payment options...</div>
-            )}
-            <center>
-              <button className='btn btn-success' onClick={handlePayment} disabled={loading || !instance}>
-                {loading ? 'Processing ....' : 'Make Payment'}
-              </button>
-            </center>
+            <div>
+              <label htmlFor='paymentMethod'>Payment Method: </label>
+              <select
+                id='paymentMethod'
+                onChange={(e) => setPayment(e.target.value)}
+                className='form-control'
+                name='paymentMethod'
+              >
+                <option value=''>----Select payment----</option>
+                <option value='cod'>Cash on Delivery</option>
+                <option value='online'>Online Payment</option>
+              </select>
+
+              {payment === 'online' && (
+                <div>
+                  <br />
+                  {!clientToken || !cart?.length ? (
+                    <p>No token found or there are no items in the cart</p>
+                  ) : (
+                    <DropIn
+                      options={{
+                        authorization: clientToken,
+                      }}
+                      onInstance={(instance) => setInstance(instance)}
+                    />
+                  )}
+                </div>
+              )}
+
+              <center>
+                <button
+                  className='btn btn-success'
+                  onClick={handleConfirmOrder}
+                  style={{ marginTop: 20 }}
+                >
+                  Confirm Order
+                </button>
+              </center>
+            </div>
           </div>
         </div>
       </div>

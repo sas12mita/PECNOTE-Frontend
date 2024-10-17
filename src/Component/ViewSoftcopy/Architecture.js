@@ -22,7 +22,7 @@ export default function ArchNotes() {
     <div>
       <Navbar />
       <br />
-      
+      <br/>
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-2'></div>

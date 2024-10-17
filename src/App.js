@@ -1,3 +1,4 @@
+// src/App.js
 import './App.css';
 import React from 'react';
 import Home from "./Component/Home";
@@ -24,13 +25,12 @@ import Computer from './Component/ViewSoftcopy/Computer';
 import Civil from './Component/ViewSoftcopy/Civil';
 import DetailPage from './Component/DetailPage';
 import UserCartPage from './Component/UserCartPage';
-import Chat from './Component/Chat';
-import Order from './Component/Order';
+//import Chat from './Component/Chat';
 import ManageUser from './Admin/ManageUser';
+import UsersOrder from './Admin/Order/UsersOrder';
+
+
 //import Search from './Component/Search';
-
-
-
 
 //import Navbar from 'Component/Navbar';
 function App() {
@@ -45,46 +45,36 @@ function App() {
           <Route path="/civil" element={<Civil />} />
           <Route path="/architecture" element={<Architecture />} />
           <Route path="/it" element={<IT />} />
-          <Route path="/order" element={<Order/>} />
-
-
-
 
           <Route path="/dashboard" element={<AdminPrivateRoute />}>
             <Route path="" element={<Dashboard />} />
             <Route path="manageUser" element={<ManageUser/>} />
+            <Route path='manageOrder' element={<UsersOrder/>}/>
 
             <Route path='softcopy' element={<Softcopy />} />
             <Route path='softcopy/computer' element={<ComNotes />} />
             <Route path='softcopy/civil' element={<CivilNotes />} />
             <Route path='softcopy/architecture' element={<ArchNotes />} />
             <Route path='softcopy/it' element={<IT_Notes />} />
-
-          </Route>
-
-
+</Route>
+        
 
           <Route path="/sellnote" element={<UserPrivateRoute />}>
-            <Route path="" element={<SellNote />} />
+            <Route path="" element={<SellNote/>} />
           </Route>
 
-          
           <Route path='/buynotes' element={<UserPrivateRoute />}>
             <Route path="" element={<BuyNotes />} />
             <Route path=":slug" element={<DetailPage />} />
-            <Route path='cart' element={<UserCartPage/>} />
-      
-
+            <Route path='cart' element={<UserCartPage/>} />      
           </Route>
-          <Route path="/chat" element={<UserPrivateRoute/>}>
-          <Route path="" element={<Chat/>}/></Route>
-
+          
+         
+ 
         </Routes>
       </BrowserRouter>
-
     </div>
-
-  )
+  );
 }
-export default App;
 
+export default App;

@@ -38,8 +38,9 @@ export default function Navbar() {
                 <Link className="nav-link text-white" to="/buynotes">BuyNotes</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-white" to="/order">Order</Link>
-              </li>
+              <Link className="nav-link text-white" to="/faq">FAQ</Link>
+            </li>
+              
               <li className="nav-item">
                 <Badge count={cart?.length} showZero>
                   <Link className="nav-link text-white" to="/buynotes/cart" style={{ paddingTop: 10 }} ><span style={{ fontSize: 17 }}>Cart </span><span style={{ fontSize: 20 }}><FaCartPlus /></span></Link>
@@ -47,7 +48,7 @@ export default function Navbar() {
               </li>
             </ul>
             <ul className="navbar-nav  mb-2 mb-lg-0">
-              <li><Link className="nav-link text-white" to="/chat"><button className="btn" style={{
+              <li><Link className="nav-link text-white" to="/app"><button className="btn" style={{
                 backgroundColor: '#ffffff',
                 color: '#0077b3',
                 border: 'none',

@@ -10,9 +10,9 @@ export default function SideBar() {
     <Link to="/dashboard" className='nav-link text-dark'>Home</Link>
   </li>
     <li>
-      <Link to="/dashboard/users" className='nav-link text-dark'>Manage Users</Link>
+      <Link to="/dashboard/manageUser" className='nav-link text-dark'>Manage Users</Link>
     </li>
-    <li><Link to="/dashboard/order" className='nav-link text-dark'>Manage Orders</Link>
+    <li><Link to="/dashboard/manageOrder" className='nav-link text-dark'>Manage Orders</Link>
     </li>
     <li>
       <Link to="/dashboard/sellnote" className='nav-link text-dark'>Sell Notes</Link>
